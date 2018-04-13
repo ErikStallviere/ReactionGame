@@ -82,7 +82,27 @@ boolean error = false;
 
 int hz = 0;
 
-int nMod = 15;
+int nMod = 23;
+
+//variabili per mod 21-22
+
+int chosenNumbers[6] = { -1, -1, -1, 1, -1, -1};
+
+int discardedNumbers[9] = { -1, -1, -1, 1, -1, -1, -1, -1, -1};
+
+boolean pressedNumbers[10];
+int scheme = 0;
+int counter = 0;
+int numButtons = 0;
+boolean flash = true;
+long selectedTime;
+
+
+// variabili per mod 9
+int response[] = {0, 0};
+int solution = 0;
+int addend[] = {0, 0};
+
 
 //variabili per collegare Arduino a DB SQL
 byte mac[] = {0x90, 0xA2, 0xDA, 0x11, 0x1D, 0x55};
@@ -124,7 +144,8 @@ void loop()
   }
   lcd.clear();
   digitalWrite(ledPins[11], HIGH);
-  while (digitalRead(buttonPins[11])) {
+  while (!debounce(11)) {
+    Serial.print("@");
     lcd.setCursor(0, 0);
     lcd.print("Premi @ per ");
     lcd.setCursor(0, 1);
@@ -132,7 +153,7 @@ void loop()
     lcd.setCursor(0, 2);
     lcd.print("la modalita");
   }
-  digitalWrite(ledPins[11], LOW);
+  Serial.println("@ premuta");
   delay(100);
   modeSelected = 0;
   arraySelected[0] = 0;
@@ -163,6 +184,8 @@ void loop()
         lcd.print("modalita");
         lcd.setCursor(9, 2);
         lcd.print(modeSelected);
+        Serial.print("mod: ");
+        Serial.println(modeSelected);
         if  (modeSelected < 1 || modeSelected > nMod) {
           lcd.setCursor(0, 4);
           lcd.print("mod non valida");
@@ -171,7 +194,7 @@ void loop()
       lastButtonsState[i] = currentButtonsState[i];
     }
   } while (!currentButtonsState[11] || !(modeSelected > 0 && modeSelected <= nMod));
-
+  digitalWrite(ledPins[11], LOW);
   boolean led = true;
   for (int i = 0; i < 6; i++) {
 
@@ -262,15 +285,47 @@ void loop()
     case 15:
       thirdModGroup(10, 100, false);
       break;
+    case 21:
+      fourthModGroup(true);
+      break;
+    case 22:
+      fourthModGroup(false);
+      break;
+    default:
+      Serial.println(); Serial.println(); Serial.println(); Serial.println(); Serial.println(); Serial.println(); Serial.println(); Serial.println();
+      Serial.println("MOD NON ESISTENTE");
+      break;
   }
   digitalWrite(buzzerPin, HIGH);
   digitalWrite(buzzerPin2, HIGH);
   delay(25 * delayValue);
   digitalWrite(buzzerPin, LOW);
   digitalWrite(buzzerPin2, LOW);
+  Serial.print("punteggio");
+  Serial.println(scores[0]);
+  Serial.print("tempo");
+  Serial.println(scores[1]);
   scores[0] = 0;
   scores[1] = 0;
   modeSelected = 0;
+  Serial.println("fine modalita");
+  delay(1000);
+  for (int i = 0; i < (sizeof(ledPins) / sizeof(ledPins[0])); i++) {
+    digitalWrite(ledPins[i], HIGH);
+  }
+  bool b = true;
+  while (b) {
+    for (int i = 0; i < (sizeof(buttonPins) / sizeof(buttonPins[0])); i++) {
+      if (debounce(i)) {
+        b = false;
+        break;
+      }
+    }
+  }
+  for (int i = 0; i < (sizeof(ledPins) / sizeof(ledPins[0])); i++) {
+    digitalWrite(ledPins[i], LOW);
+  }
   delay(5000);
+  Serial.println("fine loop");
 }
 
