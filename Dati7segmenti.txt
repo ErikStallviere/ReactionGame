@@ -1,0 +1,17 @@
+Parte della scritta: 
+	primo (in fondo) = ":"
+	secondo = digit 4
+	terzo = barra centrale
+	quarto = barra bassa destra
+	quinta = dot
+	sesta = barra bassa
+	settima = barra bassa sinistra
+
+Parte superiore:
+	primo (in fondo) = ":"
+	secondo = barra superiore destra
+	terzo = digit 3
+	quarto = digit 2
+	quinto = barra superiore sinistra
+	sesto = barra superiore
+	settimo = digit 1
