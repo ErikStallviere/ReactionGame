@@ -209,12 +209,6 @@ boolean debounce(int n)
 
 void setNextButton()
 {
-  //Serial.println("LISTA:");
-  for (int i = 0; i < 11; i++) {
-    //Serial.println(chosenOnes[i]);
-    //Serial.println();
-    //Serial.println(chosenOnesNumbers[i]);
-  }
   while (true)
   {
     int n = random(0, dimensions);
@@ -297,16 +291,8 @@ void mod23()
     }
   }
 
-  for (int i = 0; i < 11; i++) {
-    chosenOnes[i] = false;
-  }
-  setNextButton();
 
   while (true) {
-    Serial.println("rewind-----------------");
-    for (int i = 0; i < 11; i++) {
-      chosenOnes[i] = false;
-    }
     finished = false;
     while (!finished) {
       for (int i = 0; i < 11; i++)
@@ -335,7 +321,6 @@ void mod23()
       }
     }
     timerGame = millis() - timer;
-
     scheme++;
     Serial.print("schema:  ");
     Serial.println(scheme);
@@ -350,5 +335,10 @@ void mod23()
       //clearVariables();
       return;
     }
+    Serial.println("rewind-----------------");
+    for (int i = 0; i < 11; i++) {
+      chosenOnes[i] = false;
+    }
+    setNextButton();
   }
 }
