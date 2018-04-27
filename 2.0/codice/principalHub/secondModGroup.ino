@@ -6,7 +6,7 @@ void secondModGroup(int dim, int colpi)
   shot = colpi;
   timer = millis();
   countdown = 180000;
-  setNextButton();
+  setNextButton(true);
 
   while (true) {
     for (int i = 0; i < dimensions; i++)
@@ -16,7 +16,7 @@ void secondModGroup(int dim, int colpi)
       if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i == currentNumber)
       {
         score++;
-        setNextButton();
+        setNextButton(true);
         stampLCD();
         digitalWrite(buzzerPin, HIGH);
         digitalWrite(buzzerPin2, HIGH);

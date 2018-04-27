@@ -115,6 +115,26 @@ int chosenOnesNumbers[11];
 boolean chosenOnes[11];
 
 
+//variabili mod10
+int numChosen = 0;
+
+
+//variabili per mod20
+int maxCounter = 4;
+int simonRecord[20];
+
+//variabili per il 7 segmenti
+const int dig4 = 13;
+const int dig3 = 12;
+const int dig2 = 11;
+const int dig1 = 10;
+
+int dueP = 53;
+
+
+int tempo[] = {52, 51, 50, 49, 48, 47, 46};
+int punti[] = {3, 4, 5, 6, 7, 8, 9};
+
 //variabili per collegare Arduino a DB SQL
 byte mac[] = {0x90, 0xA2, 0xDA, 0x11, 0x1D, 0x55};
 IPAddress ip(192, 168, 5, 16);
@@ -143,6 +163,25 @@ void setup() {
     lastButtonsState[i] = false;
     currentButtonsState[i] = false;
   }
+  //7 segmenti
+  pinMode(dig4, OUTPUT);
+  pinMode(dig3, OUTPUT);
+  pinMode(dig2, OUTPUT);
+  pinMode(dig1, OUTPUT);
+
+  for (int i = 0; i < (sizeof(tempo) / sizeof(tempo[0])); i++) {
+    pinMode(tempo[i], OUTPUT);
+    pinMode(punti[i], OUTPUT);
+  }
+  pinMode(dueP, OUTPUT);
+
+  digitalWrite(dig4, HIGH);
+  digitalWrite(dig3, HIGH);
+  digitalWrite(dig2, HIGH);
+  digitalWrite(dig1, HIGH);
+
+
+  //connessione
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
   conn = client.connect(server, 3305);
@@ -150,6 +189,8 @@ void setup() {
 
 void loop()
 {
+  Serial.println("Inizio 7segm");
+  reload7Segments(false);
   for (int i = 0; i < sizeof(ledPins) / sizeof(ledPins[0]); i++) {
     digitalWrite(ledPins[i], LOW);
   }

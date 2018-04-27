@@ -5,7 +5,7 @@ void firstModGroup(int d, long t, boolean octave)
   countdown = t;
   boolean led = HIGH;
   timer = millis();
-  setNextButton();
+  setNextButton(true);
   while (true) {
     for (int i = 0; i < dimensions; i++)
     {
@@ -13,13 +13,14 @@ void firstModGroup(int d, long t, boolean octave)
       if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i == currentNumber)
       {
         score++;
-        stampLCD();
+        reload7Segments(false);
+        //stampLCD();
         digitalWrite(buzzerPin, HIGH);
         digitalWrite(buzzerPin2, HIGH);
         delay(delayValue);
         digitalWrite(buzzerPin, LOW);
         digitalWrite(buzzerPin2, LOW);
-        setNextButton();
+        setNextButton(true);
       }
 
       lastButtonsState[i] = currentButtonsState[i];
@@ -44,7 +45,7 @@ void firstModGroup(int d, long t, boolean octave)
           digitalWrite(buzzerPin2, LOW);
           countdownLoop++;
 
-          setNextButton();
+          setNextButton(true);
           if (countdownLoop >= 4) {
             for (int i = 0; i < dimensions; i++)
             {
@@ -52,7 +53,11 @@ void firstModGroup(int d, long t, boolean octave)
             }
             scores[0] = score;
             scores[1] = timerGame;
+            Serial.println("END");
+            reload7Segments(true);
+            delay(100);
             clearVariables();
+            
             return;
           }
           hz = 0;
@@ -60,15 +65,21 @@ void firstModGroup(int d, long t, boolean octave)
         } else {
           scores[0] = score;
           scores[1] = timerGame;
+          Serial.println("END");
+          reload7Segments(true);
+          delay(100);
           clearVariables();
+          
           return;
         }
       }
     }
-    if (timerGame / 1000 >= hz) {
-      stampLCD();
+    reload7Segments(false);
+    /*if (timerGame / 1000 >= hz) {
+      
+      //stampLCD();
       hz = hz + 1;
-    }
+    }*/
   }
 }
 

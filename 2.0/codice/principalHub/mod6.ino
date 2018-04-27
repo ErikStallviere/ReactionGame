@@ -1,7 +1,7 @@
 
 void mod6() {
   dimensions = 10;
-  setNextButton();
+  setNextButton(true);
   while (true) {
     timeReflection = 1400 - scheme * 100;
     buttonCounter = 0;
@@ -38,7 +38,7 @@ void mod6() {
         errorCounter = 0;
       }
       delay(150);
-      setNextButton();
+      setNextButton(true);
       pressed = false;
       error = false;
       if (errorCounter >= 3) {

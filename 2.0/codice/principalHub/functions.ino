@@ -10,7 +10,7 @@ boolean debounce(int n)
   return current;
 }
 
-void setNextButton()
+void setNextButton(boolean light)
 {
   while (true)
   {
@@ -27,8 +27,21 @@ void setNextButton()
   {
     digitalWrite(ledPins[i], LOW);
   }
-  digitalWrite(ledPins[currentNumber], HIGH);
+  if (light) {
+    digitalWrite(ledPins[currentNumber], HIGH);
+  }
   return;
+}
+boolean clickAllButtonsAllows(int n) {
+  if (((solution / 10) + 1) <= 1) {
+    return 1 <= n;
+  }
+  return 2 <= n;
+
+}
+
+boolean checkResults() {
+  return ((response[0] * 10 + response[1]) == solution);
 }
 
 void stampLCD() {
