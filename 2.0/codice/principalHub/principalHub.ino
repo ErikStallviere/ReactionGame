@@ -103,6 +103,17 @@ int response[] = {0, 0};
 int solution = 0;
 int addend[] = {0, 0};
 
+//variavbili mod6
+
+int errorCounter = 0;
+int buttonCounter = 0;
+
+
+//variabili mod23
+int chosenOnesNumbers[11];
+
+boolean chosenOnes[11];
+
 
 //variabili per collegare Arduino a DB SQL
 byte mac[] = {0x90, 0xA2, 0xDA, 0x11, 0x1D, 0x55};

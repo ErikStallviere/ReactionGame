@@ -101,11 +101,6 @@ long selectedTime;
 // variabili per mod 9
 int response[] = {0, 0};
 int solution = 0;
-int addend[] = {0, 0};
-
-int chosenOnesNumbers[11];
-
-boolean chosenOnes[11];
 
 //variabili per collegare Arduino a DB SQL
 byte mac[] = {0x90, 0xA2, 0xDA, 0x11, 0x1D, 0x55};
@@ -134,7 +129,6 @@ void setup() {
     //Riempio di false i due array.
     lastButtonsState[i] = false;
     currentButtonsState[i] = false;
-    chosenOnes[i] = false;
   }
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
@@ -166,7 +160,7 @@ void loop()
       digitalWrite(buzzerPin2, LOW);
     }
   }
-  mod23();
+  mod10();
   Serial.print("punteggio");
   Serial.println(scores[0]);
   Serial.print("tempo");
@@ -207,152 +201,154 @@ boolean debounce(int n)
   return current;
 }
 
-void setNextButton()
+
+int numChosen = 0;
+
+
+void mod10()
 {
-  while (true)
-  {
-    int n = random(0, dimensions);
-    Serial.print("num casuale: ");
-    Serial.println(n);
-    currentNumber = chosenOnesNumbers[n];
-    //Serial.print("num corrispondente: ");
-    //Serial.println(currentNumber);
-    if (currentNumber >= 0 && currentNumber <= 11) {
-      //Serial.println(chosenOnes[currentNumber]);
-      if (!chosenOnes[currentNumber])
-      {
-        Serial.println("CHECKED------------------");
-        chosenOnes[currentNumber] = true;
-        break;
-      }
-    }
-  }
-
-  for (int i = 0; i < 12; i++)
-  {
-    digitalWrite(ledPins[i], LOW);
-  }
-  digitalWrite(ledPins[currentNumber], HIGH);
-  //Serial.println(currentNumber);
-  startTime = millis();
-  return;
-}
-
-
-
-int countChosenOnes() {
-  int c = 0;
-  for (int i = 0; i < 11; i++) {
-    if (chosenOnes[i]) {
-      c++;
-    }
-  }
-  return c;
-}
-
-void mod23()
-{
-  timer = millis();
-  digitalWrite(ledPins[11], HIGH);
-  while (!debounce(11)) {
-    Serial.println("Prema #");
-  }
-  digitalWrite(ledPins[11], LOW);
-  delay(1000);
-  boolean finished = false;
-  while (!finished) {
-    for (int i = 0; i < 12; i++) {
-      currentButtonsState[i] = debounce(i);
-
-      if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i != 11)
-      {
-        chosenOnes[i] = !chosenOnes[i];
-        //Serial.println(i);
-        //Serial.println(chosenOnes[i]);
-        digitalWrite(ledPins[i], chosenOnes[i]);
-      }
-      if (countChosenOnes() >= 1 && debounce(11)) {
-        finished = true;
-      }
-      lastButtonsState[i] = currentButtonsState[i];
-    }
-  }
-  dimensions = countChosenOnes();
-  for (int i = 0; i < dimensions; i++) {
-    for (int j = 0; j < 11; j++) {
-      if (chosenOnes[j]) {
-        chosenOnesNumbers[i] = j;
-        Serial.print("chosen: ");
-        Serial.println(j);
-        chosenOnes[j] = false;
-        break;
-      }
-
-    }
-  }
-  Serial.println("START");
-  for (int i = 0; i < 12; i++) {
-    digitalWrite(ledPins[i], LOW);
-  }
-  setNextButton();
-  finished = false;
-  while (true) {
-
-    Serial.println("Primo ciclo");
-    while (!finished) {
-      //Serial.println("Secondo ciclo");
-      for (int i = 0; i < 11; i++)
-      {
-        currentButtonsState[i] = debounce(i);
-        //Serial.print("current: ");
-        //Serial.println(i);
-        //Serial.print(": ");
-        //Serial.println(currentButtonsState[i]);
-        if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i == currentNumber)
+  dimensions = 10;
+  boolean b = true;
+  boolean b2 = false;
+  digitalWrite(ledPins[10], HIGH);
+  while (b) {
+    for (int i = 0; i < sizeof(buttonPins) / sizeof(buttonPins[0]); i++) {
+      if (b2 == true) {
+        for (int j = 1; j < (sizeof(ledPins) / sizeof(ledPins[0])) - 2; j++)
         {
-          score++;
-          Serial.println(i);
-          Serial.println("CORRETTO---------------");
-          if (score % dimensions == 0) {
-            Serial.println("finished");
-            finished = true;
-          }else{
-            setNextButton();
+          digitalWrite(ledPins[j], HIGH);
+        }
+      }
+      currentButtonsState[i] = debounce(i);
+      if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i == 10) {
+        b2 = true;
+        digitalWrite(ledPins[10], LOW);
+      } else if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i >= 1 && i <= 9 && b2 == true) {
+        numChosen = i;
+        b = false;
+      }
+    }
+  }
+  Serial.print("num scelto: ");
+  Serial.println(numChosen);
+  for (int i = 1; i < (sizeof(ledPins) / sizeof(ledPins[0])) - 1; i++)
+  {
+    digitalWrite(ledPins[i], LOW);
+  }
+
+  while (true) {
+    int buttonPressed = 0;
+    response[0] = 0;
+    response[1] = 0;
+    delay(100);
+    defineProduct();
+    while (!pressed && !error) {
+      for (int i = 0; i < 10; i++) {
+        currentButtonsState[i] = debounce(i);
+        if (currentButtonsState[i] == true && lastButtonsState[i] != currentButtonsState[i]) {
+          response[0] = response[1];
+          response[1] = i;
+          buttonPressed++;
+          Serial.print("bottoni: ");
+          Serial.println(buttonPressed);
+          Serial.print(response[0]);
+          Serial.println(response[1]);
+        }
+        if (clickAllButtonsAllows(buttonPressed)) {
+          Serial.println("BOTTONI PREMUTI");
+          Serial.println(solution);
+          if (checkResults())
+          {
+            pressed = true;
+            digitalWrite(buzzerPin, HIGH);
+            delay(delayValue);
+            digitalWrite(buzzerPin, LOW);
+            score++;
+            Serial.println("RIGHT--------");
+          } else {
+            error = true;
+            Serial.println("WRONG--------");
           }
-          digitalWrite(buzzerPin, HIGH);
-          digitalWrite(buzzerPin2, HIGH);
-          delay(delayValue);
-          delay(1);
+          break;
         }
         lastButtonsState[i] = currentButtonsState[i];
       }
-      Serial.print("score:");
-      Serial.println(score);
-      Serial.print("dim:");
-      Serial.println(dimensions);
+    }
+    if (error) {
+      lcd.setCursor(0, 1);
+      lcd.print("SBAGLIATO");
+      lcd.setCursor(0, 1);
+      lcd.print("Risultato corretto: ");
+      lcd.setCursor(0, 1);
+      lcd.print(solution);
+      lcd.setCursor(0, 1);
+      lcd.print("Sua risposta: ");
+      lcd.setCursor(0, 1);
+      lcd.print(response[0]);
+      lcd.print(response[1]);
 
     }
-    finished = false;
-
-    timerGame = millis() - timer;
+    pressed = false;
+    error = false;
+    delay(100);
     scheme++;
+    Serial.println("cambio schema");
+    delay(1000);
+    timerGame = millis() - timer;
     Serial.print("schema:  ");
     Serial.println(scheme);
-    if (scheme >= 10)
+    if (scheme >= 12)
     {
-      for (int i = 0; i < 12; i++)
-      {
-        digitalWrite(ledPins[i], LOW);
-      }
       scores[0] = score;
       scores[1] = timerGame;
       //clearVariables();
       return;
     }
-    Serial.println("rewind-----------------");
-    for (int i = 0; i < 11; i++) {
-      chosenOnes[i] = false;
-    }
-    setNextButton();
   }
 }
+
+void defineProduct() {
+  setNextButton(false);
+  Serial.println(); Serial.println(); Serial.println(); Serial.println();
+  Serial.print(numChosen);
+  Serial.print("  *  ");
+  Serial.println(currentNumber);
+  Serial.println(); Serial.println(); Serial.println(); Serial.println();
+  solution = numChosen * currentNumber;
+  startTime = millis();
+}
+
+void setNextButton(boolean light)
+{
+  while (true)
+  {
+    currentNumber = random(0, dimensions);
+
+    if (currentNumber != lastNumber)
+    {
+      break;
+    }
+  }
+  lastNumber = currentNumber;
+
+  for (int i = 0; i < dimensions; i++)
+  {
+    digitalWrite(ledPins[i], LOW);
+  }
+  if (light) {
+    digitalWrite(ledPins[currentNumber], HIGH);
+  }
+  return;
+}
+boolean clickAllButtonsAllows(int n) {
+  if (((solution / 10) + 1) <= 1) {
+    return 1 <= n;
+  }
+  return 2 <= n;
+
+}
+
+boolean checkResults() {
+  return ((response[0] * 10 + response[1]) == solution);
+}
+

@@ -34,7 +34,6 @@ void mod9() {
     response[0] = 0;
     response[1] = 0;
     while (!pressed && !error && timeElapsed() <= timeReflection) {
-
       for (int i = 0; i < 10; i++) {
         currentButtonsState[i] = debounce(i);
         if (currentButtonsState[i] == true && lastButtonsState[i] != currentButtonsState[i]) {
