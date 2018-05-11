@@ -1,3 +1,4 @@
+
 void mod20()
 {
   dimensions = 10;
@@ -55,3 +56,4 @@ void defineSimonGame() {
     Serial.println(simonRecord[i]);
   }
 }
+

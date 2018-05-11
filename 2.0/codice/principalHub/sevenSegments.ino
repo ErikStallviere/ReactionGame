@@ -1,51 +1,47 @@
 
 
-void reload7Segments(boolean last) {
-  Serial.println("7segmentireload");
+void reload7Segments() {
+
   digitalWrite(dueP, HIGH);
   for (int dig = 4; dig > 0; dig--) {
     numero(dig);
-    Serial.print("dig: ");
-    Serial.println(dig);
+
     if (dig == 4) {
       stampa((int)(timerGame / 1000) % 10, tempo);
-      Serial.println();
+      //Serial.print((int)floor(timerGame / 1000) % 10);
       stampa(score % 10, punti);
     }
     else if (dig == 3) {
-      stampa(((int)(timerGame / 1000) / 10) % 6, tempo);
-      Serial.println();
+      stampa((int)((timerGame / 1000) / 10) % 6, tempo);
+      //Serial.print((int)floor(timerGame / 1000 / 10) % 6);
       stampa((score / 10) % 10, punti);
     }
     else if (dig == 2) {
       stampa((int)((timerGame / 1000) / 60) % 10, tempo);
-      Serial.println();
+      //Serial.print((int)floor(timerGame / 1000 / 60) % 10);
       stampa((score / 100) % 10, punti);
     }
     else {
-      stampa(((int)((timerGame / 1000 / 60) / 10) % 6), tempo);
-      Serial.println();
+      stampa((int)((timerGame / 1000 / 60) / 10) % 6, tempo);
+      //Serial.println((int)floor(timerGame / 1000 / 600) % 6);
       stampa((score / 1000) % 10, punti);
     }
-    Serial.print("SCORE: ");
-    Serial.println(score);
-    Serial.print("TEMPO: ");
-    Serial.println(timerGame / 1000);
-    delayMicroseconds(500);
-    if (!last) {
-      Serial.println("NO END");
-      spegni();
-    }
+
+    delayMicroseconds(3500);
+
+    spegni();
 
   }
 }
 
 void stampa(int nrDisplay, int arrayP[]) {
-Serial.println("stampa");
+  if (nrDisplay != 0) {
+    //Serial.println(nrDisplay);
+  }
+  
   switch (nrDisplay) {
 
     case 0:
-    Serial.println("Disegno uno 0");
       digitalWrite(arrayP[4], HIGH);
       digitalWrite(arrayP[6], HIGH);
       digitalWrite(arrayP[2], HIGH);
@@ -144,7 +140,7 @@ Serial.println("stampa");
       digitalWrite(arrayP[5], HIGH);
       digitalWrite(arrayP[3], HIGH);
       break;
-  }
+    }
 }
 
 void numero(int digit) {
@@ -163,8 +159,9 @@ void numero(int digit) {
       break;
   }
 }
+
+
 void spegni() {
-  Serial.println("SPENGOOO");
   digitalWrite(dig1, HIGH);
   digitalWrite(dig2, HIGH);
   digitalWrite(dig3, HIGH);

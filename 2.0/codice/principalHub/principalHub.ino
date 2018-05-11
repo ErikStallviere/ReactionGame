@@ -1,13 +1,15 @@
+
 #include <Wire.h>
 
 #include <FastIO.h>
 #include <I2CIO.h>
-#include <LCD.h>
+#include <lcd.h>
 #include <LiquidCrystal.h>
 #include <LiquidCrystal_I2C.h>
 #include <LiquidCrystal_SR.h>
 #include <LiquidCrystal_SR2W.h>
 #include <LiquidCrystal_SR3W.h>
+
 
 #include <boarddefs.h>
 #include <IRremote.h>
@@ -17,7 +19,7 @@
 #include <Ethernet2.h>
 #include <SPI.h>
 
-const byte RECV_PIN = 50;
+const byte RECV_PIN = 52;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
@@ -132,10 +134,12 @@ const int dig1 = 10;
 int dueP = 53;
 
 
-int tempo[] = {52, 51, 50, 49, 48, 47, 46};
+int tempo[] = {2, 51, 50, 49, 48, 47, 46};
 int punti[] = {3, 4, 5, 6, 7, 8, 9};
 
+
 //variabili per collegare Arduino a DB SQL
+
 byte mac[] = {0x90, 0xA2, 0xDA, 0x11, 0x1D, 0x55};
 IPAddress ip(192, 168, 5, 16);
 IPAddress server(192, 168, 5, 17);
@@ -145,7 +149,7 @@ int conn;
 void setup() {
   //Funzionamento dei pin
   Wire.begin();
-  // inizializzazione dell'oggetto lcd_I2C
+  // inizializzazione dell'oggetto //lcd_I2C
   lcd.begin(20, 4);
   lcd.clear();
   //accensione retro illuminazione
@@ -163,62 +167,64 @@ void setup() {
     lastButtonsState[i] = false;
     currentButtonsState[i] = false;
   }
-  //7 segmenti
-  pinMode(dig4, OUTPUT);
-  pinMode(dig3, OUTPUT);
-  pinMode(dig2, OUTPUT);
-  pinMode(dig1, OUTPUT);
+  /*
+    //7 segmenti
+    pinMode(dig4, OUTPUT);
+    pinMode(dig3, OUTPUT);
+    pinMode(dig2, OUTPUT);
+    pinMode(dig1, OUTPUT);
 
-  for (int i = 0; i < (sizeof(tempo) / sizeof(tempo[0])); i++) {
+    for (int i = 0; i < 7; i++) {
     pinMode(tempo[i], OUTPUT);
     pinMode(punti[i], OUTPUT);
-  }
-  pinMode(dueP, OUTPUT);
+    }
 
-  digitalWrite(dig4, HIGH);
-  digitalWrite(dig3, HIGH);
-  digitalWrite(dig2, HIGH);
-  digitalWrite(dig1, HIGH);
+    pinMode(dueP, OUTPUT);
+    digitalWrite(50, OUTPUT);
+    digitalWrite(dig4, HIGH);
+    digitalWrite(dig3, HIGH);
+    digitalWrite(dig2, HIGH);
+    digitalWrite(dig1, HIGH);*/
 
 
   //connessione
   Serial.begin(9600);
   Ethernet.begin(mac, ip);
-  conn = client.connect(server, 3305);
+  conn = client.connect(server, 80);
 }
 
 void loop()
 {
-  Serial.println("Inizio 7segm");
-  reload7Segments(false);
+
+  reload7Segments();
   for (int i = 0; i < sizeof(ledPins) / sizeof(ledPins[0]); i++) {
     digitalWrite(ledPins[i], LOW);
   }
-  lcd.clear();
+  //lcd.clear();
   digitalWrite(ledPins[11], HIGH);
   while (!debounce(11)) {
     Serial.print("@");
-    lcd.setCursor(0, 0);
-    lcd.print("Premi @ per ");
-    lcd.setCursor(0, 1);
-    lcd.print("scegliere");
-    lcd.setCursor(0, 2);
-    lcd.print("la modalita");
+    //lcd.setCursor(0, 0);
+    //lcd.print("Premi @ per ");
+    //lcd.setCursor(0, 1);
+    //lcd.print("scegliere");
+    //lcd.setCursor(0, 2);
+    //lcd.print("la modalita");
   }
   Serial.println("@ premuta");
   delay(100);
   modeSelected = 0;
   arraySelected[0] = 0;
   arraySelected[1] = 0;
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Mod disponibili:");
-  lcd.setCursor(0, 1);
-  lcd.print("1 - 15");
-  lcd.setCursor(0, 2);
-  lcd.print("Premi i bottoni");
-  lcd.setCursor(0, 3);
-  lcd.print("per scegliere");
+  //lcd.clear();
+  //lcd.setCursor(0, 0);
+  //lcd.print("Mod disponibili:");
+  //lcd.setCursor(0, 1);
+  //lcd.print("1 - 15");
+  //lcd.setCursor(0, 2);
+  //lcd.print("Premi i bottoni");
+  //lcd.setCursor(0, 3);
+  //lcd.print("per scegliere");
   delay(200);
   do {
     for (int i = 0; i < sizeof(buttonPins) / sizeof(buttonPins[0]); i++) {
@@ -227,20 +233,20 @@ void loop()
         arraySelected[0] = arraySelected[1];
         arraySelected[1] = i;
         modeSelected = arraySelected[1] + arraySelected[0] * 10;
-        lcd.clear();
-        lcd.setCursor(0, 0);
-        lcd.print("Mod disponibili:");
-        lcd.setCursor(0, 1);
-        lcd.print("1 - 15");
-        lcd.setCursor(0, 2);
-        lcd.print("modalita");
-        lcd.setCursor(9, 2);
-        lcd.print(modeSelected);
+        //lcd.clear();
+        //lcd.setCursor(0, 0);
+        //lcd.print("Mod disponibili:");
+        //lcd.setCursor(0, 1);
+        //lcd.print("1 - 15");
+        //lcd.setCursor(0, 2);
+        //lcd.print("modalita");
+        //lcd.setCursor(9, 2);
+        //lcd.print(modeSelected);
         Serial.print("mod: ");
         Serial.println(modeSelected);
         if  (modeSelected < 1 || modeSelected > nMod) {
-          lcd.setCursor(0, 4);
-          lcd.print("mod non valida");
+          //lcd.setCursor(0, 4);
+          //lcd.print("mod non valida");
         }
       }
       lastButtonsState[i] = currentButtonsState[i];
@@ -257,10 +263,10 @@ void loop()
     delay(500);
     led = !led;
     if (i % 2 == 0) {
-      lcd.clear();
+      //lcd.clear();
 
-      lcd.setCursor(0, 0);
-      lcd.print(3 - i / 2);
+      //lcd.setCursor(0, 0);
+      //lcd.print(3 - i / 2);
       digitalWrite(buzzerPin, HIGH);
       digitalWrite(buzzerPin2, HIGH);
       delay(delayValue);
@@ -273,7 +279,10 @@ void loop()
   delay(delayValue * 2);
   digitalWrite(buzzerPin, LOW);
   digitalWrite(buzzerPin2, LOW);
-  lcd.clear();
+  //lcd.clear();
+
+  Serial.print("connessione: ");
+  Serial.println(conn);
   switch (modeSelected) {
 
     case 1:
@@ -348,6 +357,33 @@ void loop()
       Serial.println("MOD NON ESISTENTE");
       break;
   }
+  Serial.println(conn);
+  if (conn) {
+    //Serial.println("connesso");
+    //Serial.println(modeSelected);
+    //scores[0] = 100;
+    Serial.println((String)modeSelected);
+    //client.println("GET /reactiongame/update_modality.php?modality=" + String(modeSelected) + " HTTP/1.1");
+    client.println("GET /reactiongame/updateAll.php?score=" + String(scores[0]) + "&modality=" + String(modeSelected) + " HTTP/1.1");
+    client.println("Host: 192.168.5.17");
+    /*client.println("GET /reactiongame/update_score.php?score=" + String(scores[0]) + " HTTP/1.1");
+      client.println("Host: 192.168.5.17");
+
+      client.println("Host: 192.168.5.17");*/
+
+    client.println("Connection: close");
+    client.println();
+  }/*
+  Serial.print("finale");
+  Serial.println(conn);
+  if (conn) {
+    //Serial.println("connesso finale");
+    scores[0] = 11;
+    client.println("GET /reactiongame/update_score.php?score=" + String(scores[0]) + " HTTP/1.1");
+    client.println("Host: 192.168.5.17");
+    client.println("Connection: close");
+    client.println();
+    }*/
   digitalWrite(buzzerPin, HIGH);
   digitalWrite(buzzerPin2, HIGH);
   delay(25 * delayValue);
@@ -367,6 +403,7 @@ void loop()
   }
   bool b = true;
   while (b) {
+    reload7Segments();
     for (int i = 0; i < (sizeof(buttonPins) / sizeof(buttonPins[0])); i++) {
       if (debounce(i)) {
         b = false;
@@ -377,7 +414,15 @@ void loop()
   for (int i = 0; i < (sizeof(ledPins) / sizeof(ledPins[0])); i++) {
     digitalWrite(ledPins[i], LOW);
   }
-  delay(5000);
+  for (int i = 0; i < 50; i++) {
+    reload7Segments();
+    delay(100);
+  }
+
   Serial.println("fine loop");
+
+  score = 0;
+  timerGame = 0;
 }
+
 

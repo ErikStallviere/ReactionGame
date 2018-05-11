@@ -15,7 +15,7 @@ int dueP = 53;
   const int b = 3;
 */
 
-int tempo[] = {52, 51, 50, 49, 48, 47, 46};
+int tempo[] = {2, 51, 50, 49, 48, 47, 46};
 int punti[] = {3, 4, 5, 6, 7, 8, 9};
 
 int punteggio = 1;
@@ -40,6 +40,7 @@ void setup() {
   digitalWrite(dig1, HIGH);
 
   start = millis() / 1000;
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -78,7 +79,6 @@ void timer(int inizio) {
 }
 
 void stampa(int nrDisplay, int arrayP[]) {
-
   switch (nrDisplay) {
 
     case 0:

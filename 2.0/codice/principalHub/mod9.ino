@@ -66,17 +66,17 @@ void mod9() {
       }
     }
     if (error) {
-      lcd.setCursor(0, 1);
-      lcd.print("SBAGLIATO");
-      lcd.setCursor(0, 1);
-      lcd.print("Risultato corretto: ");
-      lcd.setCursor(0, 1);
-      lcd.print(solution);
-      lcd.setCursor(0, 1);
-      lcd.print("Sua risposta: ");
-      lcd.setCursor(0, 1);
-      lcd.print(response[0]);
-      lcd.print(response[1]);
+//      lcd.setCursor(0, 1);
+      //lcd.print("SBAGLIATO");
+     // lcd.setCursor(0, 1);
+     // lcd.print("Risultato corretto: ");
+     // lcd.setCursor(0, 1);
+     // lcd.print(solution);
+     // lcd.setCursor(0, 1);
+    //  lcd.print("Sua risposta: ");
+//lcd.setCursor(0, 1);
+    //  lcd.print(response[0]);
+//lcd.print(response[1]);
 
     }
     pressed = false;
@@ -106,5 +106,4 @@ void defineSum() {
   solution = addend[0] + addend[1];
   startTime = millis();
 }
-
 

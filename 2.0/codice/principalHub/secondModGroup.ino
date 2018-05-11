@@ -17,7 +17,7 @@ void secondModGroup(int dim, int colpi)
       {
         score++;
         setNextButton(true);
-        stampLCD();
+        stamplcd();
         digitalWrite(buzzerPin, HIGH);
         digitalWrite(buzzerPin2, HIGH);
         delay(delayValue);
@@ -37,7 +37,7 @@ void secondModGroup(int dim, int colpi)
       }
     }
     if (timerGame / 1000 >= hz) {
-      stampLCD();
+      //stamplcd();
       hz = hz + 1;
     }
   }

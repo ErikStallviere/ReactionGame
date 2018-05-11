@@ -35,7 +35,7 @@ void thirdModGroup(int dim, int colpi, boolean angolo)
         lastButtonsState[i] = currentButtonsState[i];
       }
     }
-    stampThirdLCD(colpi);
+    stampThirdlcd(colpi);
     if (pressed) {
       digitalWrite(buzzerPin, HIGH);
       delay(delayValue);
@@ -46,10 +46,10 @@ void thirdModGroup(int dim, int colpi, boolean angolo)
       timeReflection -= 50;
     }
     if (timeReflection < 200) {
-      lcd.setCursor(0, 1);
+//      //////////lcd.setCursor(0, 1);
 
-      stampThirdLCD(colpi);
-      lcd.print("GAME OVER");
+      stampThirdlcd(colpi);
+      ////////lcd.print("GAME OVER");
 
       clearVariables();
       return;
@@ -77,7 +77,7 @@ void thirdModGroup(int dim, int colpi, boolean angolo)
       }
       scores[0] = score;
       scores[1] = timerGame;
-      stampThirdLCD(colpi);
+      stampThirdlcd(colpi);
       clearVariables();
       return;
     }
