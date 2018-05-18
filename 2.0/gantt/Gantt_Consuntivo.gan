@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2018-03-12" view-index="0" gantt-divider-location="566" resource-divider-location="300" version="2.8.5" locale="it">
+    <description/>
+    <view zooming-state="default:6" id="gantt-chart">
+        <field id="tpd3" name="Nome" width="274" order="0"/>
+        <field id="tpd4" name="Data d'inizio" width="75" order="1"/>
+        <field id="tpd5" name="Data di fine" width="84" order="2"/>
+        <field id="tpd13" name="Risorse" width="129" order="3"/>
+        <option id="taskLabelUp" value=""/>
+        <option id="taskLabelDown" value=""/>
+        <option id="color.recent"><![CDATA[#ff3333 #00cc33 #cccc00 #3399ff #0099ff]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nome" width="210" order="0"/>
+        <field id="1" name="Ruolo predefinito" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="1" tue="1" wed="1" thu="1" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Analisi" meeting="false" start="2018-03-16" duration="7" complete="0" expand="true">
+            <task id="58" name="Funzionamento collegamento wireless" color="#3399ff" meeting="false" start="2018-03-16" duration="3" complete="0" expand="true"/>
+            <task id="57" name="Funzionamento Pedana" color="#3399ff" meeting="false" start="2018-04-20" duration="2" complete="0" expand="true"/>
+            <task id="59" name="Gestione due 7 segmenti" color="#0099ff" meeting="false" start="2018-03-16" duration="7" complete="0" expand="true">
+                <depend id="61" type="2" difference="-1" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="1" name="Implementazione" color="#000000" meeting="false" start="2018-03-30" duration="8" complete="0" expand="true">
+            <task id="60" name="Risoluzione problemi" meeting="false" start="2018-03-30" duration="3" complete="0" expand="true">
+                <task id="62" name="Modalità 9" color="#ff3333" meeting="false" start="2018-03-30" duration="1" complete="0" expand="true"/>
+                <task id="9" name="Modalitâ 21" color="#ff3333" meeting="false" start="2018-03-30" duration="2" complete="0" expand="true"/>
+                <task id="10" name="Modalità 22" color="#ff3333" meeting="false" start="2018-04-06" duration="1" complete="0" expand="true"/>
+                <task id="11" name="Modalità 23" color="#ff3333" meeting="false" start="2018-04-13" duration="1" complete="0" expand="true">
+                    <depend id="55" type="2" difference="-1" hardness="Strong"/>
+                </task>
+            </task>
+            <task id="127" name="Modalità mancanti" meeting="false" start="2018-04-13" duration="5" complete="0" expand="true">
+                <task id="128" name="Modalità 5" color="#ff3333" meeting="false" start="2018-04-20" duration="4" complete="0" expand="true">
+                    <depend id="41" type="2" difference="-1" hardness="Strong"/>
+                </task>
+                <task id="129" name="Modalità 6" color="#ff3333" meeting="false" start="2018-04-13" duration="3" complete="0" expand="true">
+                    <depend id="43" type="2" difference="-1" hardness="Strong"/>
+                </task>
+                <task id="130" name="Modalità 10" color="#ff3333" meeting="false" start="2018-04-27" duration="2" complete="0" expand="true">
+                    <depend id="47" type="2" difference="-1" hardness="Strong"/>
+                </task>
+                <task id="131" name="Modalità 20" color="#ff3333" meeting="false" start="2018-05-04" duration="2" complete="0" expand="true">
+                    <depend id="49" type="2" difference="-1" hardness="Rubber"/>
+                    <depend id="165" type="2" difference="0" hardness="Strong"/>
+                </task>
+            </task>
+            <task id="61" name="7 segmenti" color="#ff3333" meeting="false" start="2018-04-27" duration="4" complete="0" expand="true"/>
+            <task id="14" name="Collegamento Arduino-Database" color="#ff3333" meeting="false" start="2018-05-11" duration="2" complete="0" expand="true">
+                <depend id="121" type="2" difference="-1" hardness="Strong"/>
+                <depend id="155" type="2" difference="-2" hardness="Strong"/>
+            </task>
+            <task id="155" name="Classifica" color="#ff3333" meeting="false" start="2018-05-11" duration="1" complete="0" expand="true">
+                <depend id="161" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="161" name="PHP e SQL completi" color="#ff3333" meeting="true" start="2018-05-18" duration="0" complete="0" expand="true"/>
+            <task id="165" name="Modalità complete" color="#ff3333" meeting="true" start="2018-05-18" duration="0" complete="0" expand="true"/>
+        </task>
+        <task id="205" name="Riassemblaggio zona Test" color="#ff3333" meeting="false" start="2018-03-16" duration="1" complete="0" expand="true"/>
+        <task id="204" name="Riassemblaggio Telaio" color="#ff3333" meeting="false" start="2018-03-23" duration="1" complete="0" expand="true"/>
+        <task id="3" name="Test" meeting="false" start="2018-03-16" duration="10" complete="0" expand="true">
+            <task id="16" name="Prima categoria di vecchie modalità" color="#00cc33" meeting="false" start="2018-03-23" duration="1" complete="0" expand="true"/>
+            <task id="18" name="Seconda categoria di vecchie modalità" color="#00cc33" meeting="false" start="2018-03-23" duration="1" complete="0" expand="true"/>
+            <task id="20" name="Terza categoria di vecchie modalità" color="#00cc33" meeting="false" start="2018-03-23" duration="1" complete="0" expand="true"/>
+            <task id="22" name="Quarta categoria di vecchie modalità" color="#00cc33" meeting="false" start="2018-03-23" duration="1" complete="0" expand="true"/>
+            <task id="41" name="Modalità 5" color="#00cc33" meeting="false" start="2018-05-11" duration="2" complete="0" expand="true"/>
+            <task id="43" name="Modalità 6" color="#00cc33" meeting="false" start="2018-04-27" duration="2" complete="0" expand="true"/>
+            <task id="45" name="Modalità 9" color="#00cc33" meeting="false" start="2018-03-23" duration="1" complete="0" expand="true"/>
+            <task id="47" name="Modalità 10" color="#00cc33" meeting="false" start="2018-05-04" duration="2" complete="0" expand="true">
+                <depend id="169" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="49" name="Modalità 20" color="#00cc33" meeting="false" start="2018-05-18" duration="1" complete="0" expand="true"/>
+            <task id="51" name="Modalitâ 21" color="#00cc33" meeting="false" start="2018-03-16" duration="1" complete="0" expand="true"/>
+            <task id="53" name="Modalità 22" color="#00cc33" meeting="false" start="2018-03-16" duration="1" complete="0" expand="true"/>
+            <task id="55" name="Modalità 23" color="#00cc33" meeting="false" start="2018-04-13" duration="1" complete="0" expand="true"/>
+            <task id="121" name="Collegamento Arduino-Apache" color="#00cc33" meeting="false" start="2018-05-18" duration="1" complete="0" expand="true">
+                <depend id="122" type="2" difference="-1" hardness="Strong"/>
+            </task>
+            <task id="122" name="Classifica" color="#00cc33" meeting="false" start="2018-05-18" duration="1" complete="0" expand="true"/>
+            <task id="169" name="Test completati" color="#00cc33" meeting="true" start="2018-05-18" duration="0" complete="0" expand="true"/>
+        </task>
+        <task id="4" name="Documentazione" color="#cccc00" meeting="false" start="2018-04-27" duration="4" complete="0" expand="true"/>
+    </tasks>
+    <resources>
+        <resource id="1" name="D. Bulloni" function="Default:0" contacts="" phone="">
+            <rate name="standard" value="50"/>
+        </resource>
+        <resource id="0" name="E. Stalliviere" function="Default:0" contacts="" phone="">
+            <rate name="standard" value="50"/>
+        </resource>
+    </resources>
+    <allocations>
+        <allocation task-id="61" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="62" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="9" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="10" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="11" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="16" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="18" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="20" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="22" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="41" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="43" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="45" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="47" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="49" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="51" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="53" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="55" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="4" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="121" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="122" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="128" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="129" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="130" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="131" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="58" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="57" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="59" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="61" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="14" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="18" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="16" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="20" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="22" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="41" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="43" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="45" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="47" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="49" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="51" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="53" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="55" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="121" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="122" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>
