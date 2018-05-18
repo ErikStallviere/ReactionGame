@@ -44,6 +44,7 @@ void fourthModGroup(boolean f)
       if (counter == getNumButtons()) {
         if (isChecked()) {
           score++;
+          incrementScore();
         }
         counter = 0;
         scheme++;

@@ -23,8 +23,8 @@ void mod10()
       }
     }
   }
-  Serial.print("num scelto: ");
-  Serial.println(numChosen);
+  //Serial.print("num scelto: ");
+  //Serial.println(numChosen);
   for (int i = 1; i < (sizeof(ledPins) / sizeof(ledPins[0])) - 1; i++)
   {
     digitalWrite(ledPins[i], LOW);
@@ -43,14 +43,14 @@ void mod10()
           response[0] = response[1];
           response[1] = i;
           buttonPressed++;
-          Serial.print("bottoni: ");
-          Serial.println(buttonPressed);
-          Serial.print(response[0]);
-          Serial.println(response[1]);
+          //Serial.print("bottoni: ");
+          //Serial.println(buttonPressed);
+          //Serial.print(response[0]);
+          //Serial.println(response[1]);
         }
         if (clickAllButtonsAllows(buttonPressed)) {
-          Serial.println("BOTTONI PREMUTI");
-          Serial.println(solution);
+          //Serial.println("BOTTONI PREMUTI");
+          //Serial.println(solution);
           if (checkResults())
           {
             pressed = true;
@@ -58,29 +58,16 @@ void mod10()
             delay(delayValue);
             digitalWrite(buzzerPin, LOW);
             score++;
-            Serial.println("RIGHT--------");
+            incrementScore();
+            //Serial.println("RIGHT--------");
           } else {
             error = true;
-            Serial.println("WRONG--------");
+            //Serial.println("WRONG--------");
           }
           break;
         }
         lastButtonsState[i] = currentButtonsState[i];
       }
-    }
-    if (error) {
-      //lcd.setCursor(0, 1);
-      //lcd.print("SBAGLIATO");
-      //lcd.setCursor(0, 1);
-      //lcd.print("Risultato corretto: ");
-      //lcd.setCursor(0, 1);
-      //lcd.print(solution);
-      //lcd.setCursor(0, 1);
-      //lcd.print("Sua risposta: ");
-      //lcd.setCursor(0, 1);
-      //lcd.print(response[0]);
-      //lcd.print(response[1]);
-
     }
     pressed = false;
     error = false;
@@ -95,7 +82,7 @@ void mod10()
     {
       scores[0] = score;
       scores[1] = timerGame;
-      //clearVariables();
+      clearVariables();
       return;
     }
   }
@@ -103,11 +90,13 @@ void mod10()
 
 void defineProduct() {
   setNextButton(false);
-  Serial.println(); Serial.println(); Serial.println(); Serial.println();
-  Serial.print(numChosen);
-  Serial.print("  *  ");
-  Serial.println(currentNumber);
-  Serial.println(); Serial.println(); Serial.println(); Serial.println();
+  lcd.clear();
+  lcd.setCursor(0, 2);
+  lcd.print(numChosen);
+  lcd.setCursor(4, 2);
+  lcd.print(" * ");
+  lcd.setCursor(7, 2);
+  lcd.print(currentNumber);
   solution = numChosen * currentNumber;
   startTime = millis();
 }

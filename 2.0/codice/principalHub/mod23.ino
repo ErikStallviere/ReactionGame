@@ -4,8 +4,8 @@ void setNextButton23()
   while (true)
   {
     int n = random(0, dimensions);
-    Serial.print("num casuale: ");
-    Serial.println(n);
+    //Serial.print("num casuale: ");
+    //Serial.println(n);
     currentNumber = chosenOnesNumbers[n];
     //Serial.print("num corrispondente: ");
     //Serial.println(currentNumber);
@@ -47,7 +47,7 @@ void mod23()
   timer = millis();
   digitalWrite(ledPins[11], HIGH);
   while (!debounce(11)) {
-    Serial.println("Prema #");
+    //Serial.println("Prema #");
   }
   digitalWrite(ledPins[11], LOW);
   delay(1000);
@@ -74,15 +74,15 @@ void mod23()
     for (int j = 0; j < 11; j++) {
       if (chosenOnes[j]) {
         chosenOnesNumbers[i] = j;
-        Serial.print("chosen: ");
-        Serial.println(j);
+        //Serial.print("chosen: ");
+        //Serial.println(j);
         chosenOnes[j] = false;
         break;
       }
 
     }
   }
-  Serial.println("START");
+  //Serial.println("START");
   for (int i = 0; i < 12; i++) {
     digitalWrite(ledPins[i], LOW);
   }
@@ -90,7 +90,7 @@ void mod23()
   finished = false;
   while (true) {
 
-    Serial.println("Primo ciclo");
+    //Serial.println("Primo ciclo");
     while (!finished) {
       //Serial.println("Secondo ciclo");
       for (int i = 0; i < 11; i++)
@@ -103,8 +103,9 @@ void mod23()
         if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i == currentNumber)
         {
           score++;
-          Serial.println(i);
-          Serial.println("CORRETTO---------------");
+          incrementScore();
+          //Serial.println(i);
+          //Serial.println("CORRETTO---------------");
           if (score % dimensions == 0) {
             Serial.println("finished");
             finished = true;
@@ -118,18 +119,18 @@ void mod23()
         }
         lastButtonsState[i] = currentButtonsState[i];
       }
-      Serial.print("score:");
-      Serial.println(score);
-      Serial.print("dim:");
-      Serial.println(dimensions);
+      //Serial.print("score:");
+      //Serial.println(score);
+      //Serial.print("dim:");
+      //Serial.println(dimensions);
 
     }
     finished = false;
 
     timerGame = millis() - timer;
     scheme++;
-    Serial.print("schema:  ");
-    Serial.println(scheme);
+    //Serial.print("schema:  ");
+    //Serial.println(scheme);
     if (scheme >= 10)
     {
       for (int i = 0; i < 12; i++)
@@ -141,7 +142,7 @@ void mod23()
       clearVariables();
       return;
     }
-    Serial.println("rewind-----------------");
+    //Serial.println("rewind-----------------");
     for (int i = 0; i < 11; i++) {
       chosenOnes[i] = false;
     }

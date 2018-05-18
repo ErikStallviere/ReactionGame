@@ -9,15 +9,12 @@ void firstModGroup(int d, long t, boolean octave)
   while (true) {
     for (int i = 0; i < dimensions; i++)
     {
-      //reload7Segments();
       currentButtonsState[i] = debounce(i);
-      //    timerGame = millis() - timer;
 
       if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i == currentNumber)
       {
         score++;
-        reload7Segments();
-        //stamp//lcd();
+        digitalWrite(scorePin, HIGH);
         digitalWrite(buzzerPin, HIGH);
         digitalWrite(buzzerPin2, HIGH);
         delay(delayValue);
@@ -29,7 +26,6 @@ void firstModGroup(int d, long t, boolean octave)
       lastButtonsState[i] = currentButtonsState[i];
       delay(1);
       timerGame = millis() - timer;
-      //reload7Segments();
       if (timerGame >= countdown)
       {
         for (int i = 0; i < dimensions; i++)
@@ -39,11 +35,11 @@ void firstModGroup(int d, long t, boolean octave)
         if (octave) {
           digitalWrite(buzzerPin, HIGH);
           digitalWrite(buzzerPin2, HIGH);
-          //lcd.clear();
-          //lcd.setCursor(0, 0);
-          //lcd.print("SCAMBIATI CON UN ");
-          //lcd.setCursor(0, 1);
-          //lcd.print("ALTRO GIOCATORE");
+          lcd.clear();
+          lcd.setCursor(0, 0);
+          lcd.print("SCAMBIATI CON UN ");
+          lcd.setCursor(0, 1);
+          lcd.print("ALTRO GIOCATORE");
           delay(3000);
           digitalWrite(buzzerPin, LOW);
           digitalWrite(buzzerPin2, LOW);
@@ -57,9 +53,8 @@ void firstModGroup(int d, long t, boolean octave)
             }
             scores[0] = score;
             scores[1] = timerGame;
-            //reload7Segments();
             delay(100);
-           clearVariables();
+            clearVariables();
 
             return;
           }
@@ -68,7 +63,6 @@ void firstModGroup(int d, long t, boolean octave)
         } else {
           scores[0] = score;
           scores[1] = timerGame;
-          reload7Segments();
           delay(100);
           clearVariables();
 
@@ -76,14 +70,6 @@ void firstModGroup(int d, long t, boolean octave)
         }
       }
     }
-    //reload7Segments();
-
-
-    /*if (timerGame / 1000 >= hz) {
-
-      //stamp//lcd();
-      hz = hz + 1;
-      }*/
   }
 }
 

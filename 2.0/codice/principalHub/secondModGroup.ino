@@ -16,8 +16,8 @@ void secondModGroup(int dim, int colpi)
       if (currentButtonsState[i] == true && currentButtonsState[i] != lastButtonsState[i] && i == currentNumber)
       {
         score++;
+        incrementScore();
         setNextButton(true);
-        stamplcd();
         digitalWrite(buzzerPin, HIGH);
         digitalWrite(buzzerPin2, HIGH);
         delay(delayValue);
@@ -30,15 +30,11 @@ void secondModGroup(int dim, int colpi)
         {
           digitalWrite(ledPins[i], LOW);
         }
-        scores[0] = score;
-        scores[1] = timerGame;
+        scores[0] = timerGame;
+        scores[1] = score;
         clearVariables();
         return;
       }
-    }
-    if (timerGame / 1000 >= hz) {
-      //stamplcd();
-      hz = hz + 1;
     }
   }
 }

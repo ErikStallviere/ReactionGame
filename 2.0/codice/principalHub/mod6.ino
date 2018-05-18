@@ -6,15 +6,15 @@ void mod6() {
     timeReflection = 1400 - scheme * 100;
     buttonCounter = 0;
     scheme++;
-    Serial.print("timeReflection: ");
-    Serial.println(timeReflection);
+    //Serial.print("timeReflection: ");
+    //Serial.println(timeReflection);
     while (buttonCounter <= 30) {
-      Serial.println(buttonCounter);
+      //Serial.println(buttonCounter);
       while (!pressed && !error) {
         for (int i = 0; i < 10; i++) {
           currentButtonsState[i] = debounce(i);
           if (timeElapsed() >= timeReflection) {
-            Serial.println("TEMPO SCADUTO----------------------");
+            //    Serial.println("TEMPO SCADUTO----------------------");
             error = true;
             break;
           }
@@ -22,16 +22,16 @@ void mod6() {
             buttonCounter++;
             if (i == currentNumber) {
               pressed = true;
-              Serial.println("RIGHT----------------------");
+              //    Serial.println("RIGHT----------------------");
             } else {
               error = true;
-              Serial.println("WRONG----------------------");
+              //  Serial.println("WRONG----------------------");
             }
           }
           lastButtonsState[i] = currentButtonsState[i];
         }
       }
-      Serial.println("ESC");
+      // Serial.println("ESC");
       if (error) {
         errorCounter++;
       } else if (pressed) {
@@ -42,25 +42,26 @@ void mod6() {
       pressed = false;
       error = false;
       if (errorCounter >= 3) {
-        Serial.print("errori: ");
+        // Serial.print("errori: ");
         Serial.println(errorCounter);
         scores[0] = scheme;
         scores[1] = 0;
         scheme = 0;
-        //clearVariables();
+        clearVariables();
         return;
       }
     }
-    Serial.println(); Serial.println(); Serial.println(); Serial.println();
-    Serial.println("NUOVO SCHEMA"); Serial.println(); Serial.println(); Serial.println(); Serial.println();
+    incrementScore();
+    // Serial.println(); Serial.println(); Serial.println(); Serial.println();
+    //Serial.println("NUOVO SCHEMA"); Serial.println(); Serial.println(); Serial.println(); Serial.println();
     delay(100);
     if (scheme >= 10) {
-      Serial.print("schema: ");
-      Serial.println(scheme);
+      //Serial.print("schema: ");
+      //Serial.println(scheme);
       scores[0] = scheme;
       scores[1] = 0;
       scheme = 0;
-      //clearVariables();
+      clearVariables();
       return;
     }
     delay(1000);

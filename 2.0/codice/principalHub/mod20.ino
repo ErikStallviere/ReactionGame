@@ -14,18 +14,18 @@ void mod20()
     }
     while (counter < maxCounter && !error) {
       for (int i = 0; i < 10; i++) {
-        
+
         currentButtonsState[i] = debounce(i);
         if (currentButtonsState[i] == true && lastButtonsState[i] != currentButtonsState[i]) {
           if (i == simonRecord[counter]) {
             //Serial.println("RIGHT---------------");
             counter++;
-            
+
           }
           else {
             //Serial.println("WRONG---------------");
             error = true;
-            
+
           }
           //Serial.println("FINE IF");
         }
@@ -38,11 +38,12 @@ void mod20()
     {
       scores[0] = maxCounter - 4;
       scores[1] = timerGame;
-      //clearVariables();
+      clearVariables();
       return;
     }
     error = false;
     delay(100);
+    incrementScore();
     maxCounter++;
     counter = 0;
   }
@@ -52,8 +53,8 @@ void defineSimonGame() {
   for (int i = 0; i < 20; i++) {
     setNextButton(false);
     simonRecord[i] = currentNumber;
-    Serial.print("Lista: ");
-    Serial.println(simonRecord[i]);
+    //Serial.print("Lista: ");
+    //Serial.println(simonRecord[i]);
   }
 }
 
