@@ -1,0 +1,14 @@
+Arduino MEGA
+increment = A2;
+pinStart = A1;
+pinFinish = A0;
+
+Arduino UNO
+scorePin = 7;
+startPin = 8;
+finishPin = 9;
+
+
+A2->7
+A1->8
+A0->9

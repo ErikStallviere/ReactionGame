@@ -36,13 +36,21 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		$count++;
 		if($_SESSION['Nome'] == $row["Gio_Nome"] && $_SESSION['Cognome'] == $row["Gio_Cognome"]){
-			$color = "##44E359";
+			/*echo "correct";
+			echo "$count";
+			echo "<br>";*/
+			$color = "#44E359";
 			if($_SESSION['game'] == $row["nr_partita"]){
 			$color = "#F64747";
 			}
 		}else{
+			/*echo ($_SESSION['Nome']." ". $_SESSION['Cognome']);
+			echo "  $count";
+			echo ($row["Gio_Nome"]." ". $row["Gio_Cognome"]);
+			echo "<br>";*/
 			$color = "#F6FAF6";
 		}
+		//echo "$count $color <br>";
 		
         echo "<tr bgcolor='$color'><td>".$count."</td><td>" . $row["Gio_Nome"]. "</td><td>" . $row["Gio_Cognome"]. "</td><td>". $row["punteggio"] . "</td></tr>";
     }

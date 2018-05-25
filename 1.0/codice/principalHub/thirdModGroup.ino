@@ -1,147 +1,131 @@
-int buttonPins[] = {22, 24, 38, 40};
-int ledPins[] = {23, 25, 39, 41};
-boolean lastButtonsState[4];
-boolean currentButtonsState[4];
-boolean pressed = false;
-float startTime;
-boolean firstCicle = true;
-float elapsedTime;
-float timeReflection = 1000;
-int score = 0;
-int currentNumber = -1;
-int lastNumber = -1;
-int shot = 100;
-boolean error = false;
-int buzzerPin = 6;
-int buzzerPin2 = 7;
-int delayValue = 20;
-void setup()
+
+void thirdModGroup(int dim, int colpi, boolean angolo)
 {
-  randomSeed(analogRead(0));
-  pinMode(buzzerPin, OUTPUT);
-  pinMode(buzzerPin2, OUTPUT);
-  for (int i = 0; i < sizeof(buttonPins) / sizeof(buttonPins[0]); i++)
-  {
-    //Assegno i pin ai relativi bottoni e led.
-    pinMode(buttonPins[i], INPUT);
-    pinMode(ledPins[i], OUTPUT);
-
-    //Riempio di false i due array.
-    lastButtonsState[i] = false;
-    currentButtonsState[i] = false;
-  }
-
-  Serial.begin(9600);
-}
-void loop()
-{
-
-  if (firstCicle)
-  {
-    boolean led = HIGH;
-    for (int i = 0; i < 6; i++) {
-
-      for (int j = 0; j < sizeof(ledPins) / sizeof(ledPins[0]); j++)
-      {
-        digitalWrite(ledPins[j], led);
-      }
-      delay(500);
-      led = !led;
-      if (i % 2 == 0) {
-
-        digitalWrite(buzzerPin, HIGH);
-        digitalWrite(buzzerPin2, HIGH);
-        delay(delayValue);
-        digitalWrite(buzzerPin, LOW);
-        digitalWrite(buzzerPin2, LOW);
-      }
-    }
-    start();
-    firstCicle = false;
-  }
-  Serial.println("go!");
-  while (pressed == false && error == false && timeElapsed() <= timeReflection) {
-    for (int i = 0; i < sizeof(buttonPins) / sizeof(buttonPins[i]); i++) {
-      currentButtonsState[i] = debounce(i);
-      if (lastButtonsState[i] == LOW && currentButtonsState[i] == HIGH && i == currentNumber)
-      {
-        pressed = true;
-      }
-      if (lastButtonsState[i] == LOW &&  currentButtonsState[i] == HIGH && i != currentNumber) {
-        error = true;
-      }
-      lastButtonsState[i] = currentButtonsState[i];
-    }
-  }
-  Serial.println("finish check!");
-  if (pressed == true) {
-    digitalWrite(buzzerPin, HIGH);
-    delay(delayValue);
-    digitalWrite(buzzerPin, LOW);
-    score++;
-    Serial.println(score);
-  }
-  if (error == true) {
-    timeReflection -= 50;
-  }
-  pressed = false;
-  error = false;
-  shot--;
+  corner = angolo;
+  dimensions = dim;
+  shot = colpi;
   start();
-  if (shot <= 0) {
-    for (int i = 0; i < sizeof(ledPins) / sizeof(ledPins[0]); i++)
-    {
-      digitalWrite(ledPins[i], LOW);
+  while (true) {
+    int counter = 0;
+    while (!pressed && !error && (timeElapsed() <= timeReflection || !corner)) {
+      for (int i = 0; i < dimensions; i++) {
+        timerGame = millis() - startTime;
+        counter = i;
+        if (counter) {
+          switch (currentNumber) {
+            case 2:
+              counter = 8;
+              break;
+            case 3:
+              counter = 9;
+              break;
+          }
+        }
+
+        currentButtonsState[i] = debounce(counter);
+
+        if (lastButtonsState[i] == LOW && currentButtonsState[i] == HIGH && counter == currentNumber)
+        {
+          pressed = true;
+        }
+        if (lastButtonsState[i] == LOW && currentButtonsState[i] == HIGH && counter != currentNumber || (!corner && timeElapsed() >= timeReflection)) {
+
+          error = true;
+        }
+        lastButtonsState[i] = currentButtonsState[i];
+      }
     }
-    digitalWrite(buzzerPin, HIGH);
-    digitalWrite(buzzerPin2, HIGH);
-    delay(25 * delayValue);
-    digitalWrite(buzzerPin, LOW);
-    digitalWrite(buzzerPin2, LOW);
-    exit(0);
+    stampThirdLCD(colpi);
+    if (pressed) {
+      digitalWrite(buzzerPin, HIGH);
+      delay(delayValue);
+      digitalWrite(buzzerPin, LOW);
+      score++;
+    }
+    if (error) {
+      timeReflection -= 50;
+    }
+    if (timeReflection < 200) {
+      lcd.setCursor(0, 1);
+
+      stampThirdLCD(colpi);
+      lcd.print("GAME OVER");
+
+      clearVariables();
+      return;
+    }
+    pressed = false;
+    error = false;
+    shot--;
+    start();
+    if (shot <= 0) {
+      int n = 0;
+      for (int i = 0; i < dimensions; i++)
+      {
+        n = i;
+        if (corner) {
+          switch (i) {
+            case 2:
+              n = 8;
+              break;
+            case 3:
+              n = 9;
+              break;
+          }
+        }
+        digitalWrite(ledPins[n], LOW);
+      }
+      scores[0] = score;
+      scores[1] = timerGame;
+      stampThirdLCD(colpi);
+      clearVariables();
+      return;
+    }
   }
 }
-
-
 
 void start() {
 
-  boolean a = true;
-  while (a)
+  while (currentNumber == lastNumber)
   {
-    currentNumber = random(0, 4);
-
-    if (currentNumber != lastNumber)
-    {
-      a = false;
+    currentNumber = random(0, dimensions);
+    if (corner) {
+      switch (currentNumber) {
+        case 2:
+          currentNumber = 8;
+          break;
+        case 3:
+          currentNumber = 9;
+          break;
+      }
     }
   }
+  int n = 0;
   lastNumber = currentNumber;
-  for (int i = 0; i < sizeof(ledPins) / sizeof(ledPins[0]); i++)
+  for (int i = 0; i < dimensions; i++)
   {
-    digitalWrite(ledPins[i], LOW);
+    n = i;
+    if (corner) {
+      switch (i) {
+        case 2:
+          n = 8;
+          break;
+        case 3:
+          n = 9;
+          break;
+      }
+    }
+    digitalWrite(ledPins[n], LOW);
   }
 
   digitalWrite(ledPins[currentNumber], HIGH);
-  //delay(1000);
+  delay(200);
   startTime = millis();
-  Serial.println(startTime);
 
 }
 
 float timeElapsed() {
   elapsedTime = (millis() - startTime);
-  elapsedTime = elapsedTime;
   return elapsedTime;
 }
 
-boolean debounce(int n)
-{
-  boolean current = digitalRead(buttonPins[n]);
-  if (lastButtonsState[n] != current)
-  {
-    delay(1);
-    current = digitalRead(buttonPins[n]);
-  }
-  return current;
-}
